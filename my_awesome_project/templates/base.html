@@ -19,6 +19,9 @@
     <!-- This file stores project-specific CSS -->
     <link href="{% static 'css/project.css' %}" rel="stylesheet">
     {% endblock %}
+    {% block addcss %}
+      
+    {% endblock addcss %}
     <!-- Le javascript
     ================================================== -->
     {# Placed at the top of the document so pages load faster with defer #}
@@ -33,19 +36,6 @@
     {% endblock javascript %}
 
     
-
-
-<style>
-  table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-  th, td {
-    border: 1px solid black;
-    padding: 8px;
-  }
-</style>
-
 
   </head>
 

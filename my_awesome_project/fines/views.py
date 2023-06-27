@@ -23,7 +23,7 @@ class DashboardView(TemplateView):
         # SELECT * FROM Fine WHERE israeli_id=<X> ORDER BY status;
         # Time Complexity O(n) - n the number of fines in the table
         if self.request.user.is_authenticated:     
-            fines = Fine.objects.filter(israeli_id=self.request.user.israeli_id).order_by('status')
+            fines = Fine.objects.filter(israeli_id=self.request.user.israeli_id)
             context['fines'] = fines
         return context
 

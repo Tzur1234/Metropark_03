@@ -5,7 +5,7 @@ from my_awesome_project.fines.models import Payment, Fine
 class PaymentCreationForm(forms.ModelForm):
 
     """
-    Payment form.
+    Payment form that work 
     """
 
     class Meta:
