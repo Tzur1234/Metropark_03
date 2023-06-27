@@ -11,11 +11,17 @@ from django.contrib import messages
 # ----------------------------------------------------------------------
 
 class DashboardView(TemplateView):
+    """
+    The main task of this view is show 
+    user's fines in the dashboard.
+    """
     template_name = "pages/home.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        # SELECT * FROM Fine WHERE israeli_id=<X> ORDER BY status;
+        # Time Complexity O(n) - n the number of fines in the table
         if self.request.user.is_authenticated:     
             fines = Fine.objects.filter(israeli_id=self.request.user.israeli_id).order_by('status')
             context['fines'] = fines
@@ -26,20 +32,29 @@ class PaymentView(CreateView):
     template_name = 'pages/payment.html'
     form_class = PaymentCreationForm
 
-    # MESSAGE
-    def get_success_url(self):
-        messages.success(self.request, 'Payment made successful !') # Set the success message
-        return reverse_lazy('home')
-
     def get_context_data(self, **kwargs):
+
+        '''
+        Add three attributes to the <home> html page:
+
+        The fine related to the current payment
+        The total payment amount of the fine
+        The amount of money left to pay
+        '''
+
         context = super().get_context_data(**kwargs)
         fine_pk = self.kwargs['pk']  # Retrieve the Fine primary key (pk) from URL
-        fine_object = Fine.objects.get(pk=fine_pk)
+        
+        # SELECT * FROM Fine WHERE pk=<fine_pk>
+        # Time Complexity: O(n)
+        fine_object = Fine.objects.get(pk=fine_pk) 
 
         total_amount = fine_object.amount_in_pennies
         max_limit = fine_object.amount_in_pennies
 
         # Set the desired max limit
+        # SELECT * FROM payment WHERE fine_id = <fine_object_id>;
+        # Time Complexity: O(n)
         payments = Payment.objects.filter(fine=fine_object.id) # all history payments
 
         # calculating the max_limit the user can pay 
@@ -59,3 +74,8 @@ class PaymentView(CreateView):
         fine = get_object_or_404(Fine, pk=self.kwargs['pk'])  # Retrieve the Fine object based on the pk from URL
         initial['fine'] = fine
         return initial
+    
+     # MESSAGE
+    def get_success_url(self):
+        messages.success(self.request, 'Payment made successful !') # Set the success message
+        return reverse_lazy('home') # back to deshboard

@@ -9,7 +9,7 @@ class CardIDField(models.IntegerField):
         MaxValueValidator(999999999)
     ]
     description = "Card ID Number"
-    unique=False
+
 
 
 
@@ -67,9 +67,8 @@ def post_save_payment_receiver(sender, instance, created, *args, **kwargs):
             total_history_payments += payment.amount_in_pennies
         
         
-        # check if the user has payed all the debt
+        # Update fine status
         if total_history_payments >= fine_object.amount_in_pennies:
-            # Update fine status
             fine_object.status = 'C'
             fine_object.save()
 
