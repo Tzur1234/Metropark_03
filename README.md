@@ -7,11 +7,6 @@ Welcome to the MetroPark system, a payment collection system for urban parking f
 
 License: MIT
 
-## Settings
-
-Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings.html).
-
-
 ## User Guide
 
 To use the application as a user, follow these steps:
