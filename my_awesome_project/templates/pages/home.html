@@ -1,54 +1,108 @@
 {% extends "base.html" %}
+{% load static %}
 {% load my_custom_filters %}
+{% block title %}Deshboard{% endblock title %}
 
+{% block css %}
+
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+
+{% endblock %}
+{% block javascript %}
+
+  <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+  <script src="{% static 'assets/js/popper.js' %}"></script>
+  <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+{% endblock javascript %}
+    
 
 {% block content %}
+
 {% if request.user.is_authenticated %}
-  
+  <section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-4">
+					<h2 class="heading-section">Fines</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<h3 class="h5 mb-4 text-center">{{request.user.username}} : {{request.user.israeli_id}}</h3>
+					<div class="table-wrap">
+						<table class="table myaccordion table-hover" id="accordion">
+						  <thead>
+						    <tr>
+						      <th>Fine Index </th>
+						      <th>Status</th>
+						      <th>Amount (₪)</th>
+						      <th>Description</th>
+						      <th>&nbsp;</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+                                
+                {% for fine in fines %}
+                  <tr data-toggle="collapse" data-target="#collapse{{fine.pk}}" aria-expanded="false" aria-controls="collapse{{fine.pk}}" class="collapsed">
+                    <th scope="row">{{ fine.pk }}</th>
+                    <td>{{ fine.get_status_description }}</td>
+                    <td>{{ fine.amount_in_pennies|divide:100 }} ₪</td>
+                    <td>{{ fine.description }}</td>
+                    <td>
+                      <i class="fa" aria-hidden="false"></i>
+                      
+                      {% if fine.status == 'O' %}
+                        <a href="{% url 'pay' pk=fine.id %}"><i class="material-icons">pay ₪</i></a>              
+                      {% endif %}                      
 
-  <table>
-    <thead>
-      <tr>
-        <th>Fine ID</th>
-        <th>Israeli ID</th>
-        <th>Status</th>
-        <th>Description</th>
-        <th>Amount (₪)</th>
-        <th>Payment</th>
-        <th>Link</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for fine in fines %}
-        <tr class="fine-row">
-          <td>{{ fine.pk }}</td>
-          <td>{{ fine.israeli_id }}</td>
-          <td>{{ fine.get_status_description }}</td>
-          <td>{{ fine.description }}</td>
-          <td>{{ fine.amount_in_pennies|divide:100 }} ₪</td>
-          <td>
-              {% for payment in fine.payments.all|dictsort:'date_created' %}
-              <tr class="payment-row">
-              <td>Payment ID: {{ payment.pk }}</td>
-              <td>Payment Type: {{ payment.get_type_description }}</td>
-              <td>Payment Amount (₪): {{ payment.amount_in_pennies|divide:100 }} ₪</td>
-              <td>Date: {{ payment.date_created }}</td>
-              </tr>
-              {% endfor %}
-          </td>
-          <td>
-            {% if fine.status == 'O' %}
+                    </td>
+                  </tr>
+                    
+                    <tr>
+                      <td colspan="6" id="collapse{{fine.pk}}" class="collapse acc" data-parent="#accordion">
 
-              <a href="{% url 'pay' pk=fine.pk %}">Payment Link</a>
-
-            
-            {% endif %}
-          </td>
-          
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-
+                        <table class="table myaccordion table-hover" id="accordion">
+                          <thead>
+                            <tr>
+                              <th>Payment Index </th>
+                              <th>Type</th>
+                              <th>Amount (₪)</th>
+                              <th>Date</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% for payment in fine.payments.all|dictsort:'date_created' %}
+                          <tr data-toggle="collapse" data-target="#collapse{{fine.pk}}" aria-expanded="false" aria-controls="collapse{{fine.pk}}" class="collapsed">
+                            <th scope="row">{{ payment.pk }}</th>
+                            <td>{{ payment.get_type_description }}</td>
+                            <td>{{ payment.amount_in_pennies|divide:100 }} ₪</td>
+                            <td>{{ payment.date_created }}</td>
+                          </tr>                          
+                          {% endfor %}
+                        </tbody>
+                        </table>
+                      </td>
+                    </tr>           
+                {% endfor %}
+						  </tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>  
 {% endif %}
+
 {% endblock content %}
+
+
+
+
+
+

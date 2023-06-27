@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load my_custom_filters %}
+
+
+{% block content %}
+{% if request.user.is_authenticated %}
+  
+
+  <table>
+    <thead>
+      <tr>
+        <th>Fine ID</th>
+        <th>Israeli ID</th>
+        <th>Status</th>
+        <th>Description</th>
+        <th>Amount (₪)</th>
+        <th>Payment</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for fine in fines %}
+        <tr class="fine-row">
+          <td>{{ fine.pk }}</td>
+          <td>{{ fine.israeli_id }}</td>
+          <td>{{ fine.get_status_description }}</td>
+          <td>{{ fine.description }}</td>
+          <td>{{ fine.amount_in_pennies|divide:100 }} ₪</td>
+          <td>
+              {% for payment in fine.payments.all|dictsort:'date_created' %}
+              <tr class="payment-row">
+              <td>Payment ID: {{ payment.pk }}</td>
+              <td>Payment Type: {{ payment.get_type_description }}</td>
+              <td>Payment Amount (₪): {{ payment.amount_in_pennies|divide:100 }} ₪</td>
+              <td>Date: {{ payment.date_created }}</td>
+              </tr>
+              {% endfor %}
+          </td>
+          <td>
+            {% if fine.status == 'O' %}
+
+              <a href="{% url 'pay' pk=fine.id %}">Payment Link</a>
+
+            
+            {% endif %}
+          </td>
+          
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endif %}
+{% endblock content %}
