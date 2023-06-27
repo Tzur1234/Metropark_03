@@ -4,11 +4,23 @@ from my_awesome_project.fines.models import Payment, Fine
 
 class PaymentCreationForm(forms.ModelForm):
 
+    """
+    Payment form.
+    """
+
+    class Meta:
+        model = Payment
+        fields = ['fine' ,'type', 'amount_in_pennies']
+
+        # Prevent from the user to chose unwilling fine.
+        widgets = {
+            'fine': forms.HiddenInput(),
+        }
+
     # Perform additional validation
     def clean_amount_in_pennies(self):
         amount_in_pennies = self.cleaned_data.get('amount_in_pennies') # How much the user has payed
         fine_object = self.cleaned_data.get('fine')  # the Fine object
-
 
 
         # Set the desired max limit
@@ -25,15 +37,6 @@ class PaymentCreationForm(forms.ModelForm):
             raise forms.ValidationError("Amount exceeds the maximum limit.")
         return amount_in_pennies
 
-
-    class Meta:
-        model = Payment
-        fields = ['fine' ,'type', 'amount_in_pennies']
-
-        # Prevent from the user to chose unwilling fine
-        widgets = {
-            'fine': forms.HiddenInput(),
-        }
        
 
 
