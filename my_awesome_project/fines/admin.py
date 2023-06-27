@@ -4,7 +4,7 @@ from my_awesome_project.fines.models import Fine, Payment
 
 class FineAdmin(admin.ModelAdmin):
     # list_display = ['israeli_id', 'date_created', 'status', 'description', 'amount_in_pennies']
-    list_display = ['date_created', 'status', 'israeli_id', 'amount_in_pennies']
+    list_display = ['pk', 'status', 'israeli_id', 'amount_in_pennies', 'date_created']
     list_filter = ['status', 'israeli_id']
     search_fields = ['israeli_id']
     ordering = ['-date_created', 'israeli_id']
