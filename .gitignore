@@ -278,4 +278,5 @@ my_awesome_project/media/
 .ipython/
 .env
 .envs/*
+.envs/
 !.envs/.local/
