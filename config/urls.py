@@ -10,6 +10,7 @@ urlpatterns = [
     path("", DashboardView.as_view(), name="home"),
     path("pay/<int:pk>/", PaymentView.as_view(), name="pay"),
     path("payment-complete/", TemplateView.as_view(template_name="pages/success.html"), name="payment-complete"),
+   
     path("about/", TemplateView.as_view(template_name="pages/about.html"), name="about"),
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),

@@ -4,6 +4,8 @@ from my_awesome_project.fines.models import Fine, Payment
 from django.urls import reverse_lazy
 from my_awesome_project.fines.forms import PaymentCreationForm
 from django.shortcuts import get_object_or_404
+from django.contrib import messages
+
 
 
 # ----------------------------------------------------------------------
@@ -22,9 +24,12 @@ class DashboardView(TemplateView):
 
 class PaymentView(CreateView):
     template_name = 'pages/payment.html'
-    # hope that naming og the url 'success' will be enough
-    success_url = reverse_lazy('payment-complete')
     form_class = PaymentCreationForm
+
+    # MESSAGE
+    def get_success_url(self):
+        messages.success(self.request, 'Payment made successful !') # Set the success message
+        return reverse_lazy('home')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
