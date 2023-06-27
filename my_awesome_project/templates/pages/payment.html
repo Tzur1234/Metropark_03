@@ -1,0 +1,21 @@
+{% extends "account/base.html" %}
+{% load my_custom_filters %}
+
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}Fine Payment{% endblock %}
+
+{% block inner %}
+<h3>{{fine_object}}</h3><hr>
+
+<h4>Total Fine amount: {{total_amount|divide:100}} ₪</h4>
+<h4>How much left to pay: {{max_limit|divide:100}} ₪</h4>
+
+<form class="signup" id="signup_form" method="post">
+  {% csrf_token %}
+  {{ form|crispy }}
+  <button class="btn btn-primary" type="submit">{% translate "Pay" %} &raquo;</button>
+</form>
+
+{% endblock %}
