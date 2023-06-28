@@ -13,7 +13,7 @@ class User(AbstractUser):
     """
 
     # new field
-    israeli_id = CardIDField(unique=True)
+    israeli_id = CardIDField(unique=True, null=True)
 
     # First and last name do not cover name patterns around the globe
     name = CharField(_("Name of User"), blank=True, max_length=255)

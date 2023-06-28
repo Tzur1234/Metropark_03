@@ -100,6 +100,8 @@ AWS_LOCATION = 'https://metropark.fra1.digitaloceanspaces.com'
 # ------------------------
 # STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATICFILES_STORAGE = "my_awesome_project.utils.storages.StaticRootS3Boto3Storage"
+
+
 # MEDIA
 # ------------------------------------------------------------------------------
 DEFAULT_FILE_STORAGE = "my_awesome_project.utils.storages.MediaRootS3Boto3Storage"
