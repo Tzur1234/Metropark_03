@@ -8,6 +8,7 @@ from my_awesome_project.fines.views import DashboardView, PaymentView
 
 urlpatterns = [
     path("", DashboardView.as_view(), name="home"),
+    path("404/", TemplateView.as_view(template_name="pages/404.html"), name="404"),
     path("pay/<int:pk>/", PaymentView.as_view(), name="pay"),
     path("payment-complete/", TemplateView.as_view(template_name="pages/success.html"), name="payment-complete"),
    

@@ -7,7 +7,7 @@
 {% block head_title %}Fine Payment{% endblock %}
 
 {% block inner %}
-<h3>{{fine_object}}</h3><hr>
+<h3>Fine Number: {{fine_object.id}}, to citizen: {{fine_object.israeli_id}}</h3><hr>
 
 <h4>Total Fine amount: {{total_amount|divide:100}} ₪</h4>
 <h4>How much left to pay: {{max_limit|divide:100}} ₪</h4>

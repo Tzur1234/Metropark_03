@@ -41,18 +41,14 @@ To use the application as a user, follow these steps:
 
 To run the project on your personal computer, follow these steps:
 
-1. Download all files from the `master` branch.
+1. Clone all files from the `master` branch.
 
-2. Contact the repository administrator to request the project keys: [tzurjob09@gmail.com](mailto:tzurjob09@gmail.com).
-
-   Note: Django requires access to these keys for the project to run. Place the provided `.envs/` folder in the root of the project.
-
-3. Create a virtual environment:
+2. Create a virtual environment:
 
    - Run the command: `$ virtualenv venv`.
    - Activate the virtual environment: `$ source venv/bin/activate`.
 
-4. The following instructions require you to use Docker:
+3. The following instructions require you to use Docker:
 
    - Build the Docker image by running the following command in your terminal:
      ```
@@ -64,7 +60,7 @@ To run the project on your personal computer, follow these steps:
      $ docker-compose -f local.yml up
      ```
 
-5. Access the application by opening the following link in your web browser: [http://0.0.0.0:8000/](http://0.0.0.0:8000/)
+4. Access the application by opening the following link in your web browser: [http://0.0.0.0:8000/](http://0.0.0.0:8000/)
 
    Now you can start using the application!
 
