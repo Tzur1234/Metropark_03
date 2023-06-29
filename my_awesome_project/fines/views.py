@@ -77,5 +77,5 @@ class PaymentView(CreateView):
     
      # MESSAGE
     def get_success_url(self):
-        messages.success(self.request, 'Payment made successful !') # Set the success message
+        messages.success(self.request, 'Payment made successfuly !') # Set the success message
         return reverse_lazy('home') # back to deshboard
