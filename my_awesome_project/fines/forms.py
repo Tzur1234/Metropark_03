@@ -19,7 +19,7 @@ class PaymentCreationForm(forms.ModelForm):
 
     # Perform additional validation
     def clean_amount_in_pennies(self):
-        amount_in_pennies = self.cleaned_data.get('amount_in_pennies') # How much the user has payed
+        amount_in_pennies = self.cleaned_data.get('amount_in_pennies') * 100 # How much the user has payed | Convert to Shekels from peneis
         fine_object = self.cleaned_data.get('fine')  # the Fine object
 
 
